@@ -72,6 +72,15 @@ input, select, textarea {
 	appearance: none;
 }
 
+/* notification fade */
+#notification {
+    display: none;
+    color: green;
+    font-weight: bold;
+    opacity: 1;
+    transition: opacity 1s ease-out;  /* Gradual fade out */
+}
+
 /* Basic */
 
 	html {

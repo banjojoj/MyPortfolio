@@ -13,18 +13,23 @@
 		<link rel="stylesheet" href="static/css/main.css" />
 	</head>
 	<body class="is-preload">
-
 		<!-- Header -->
 			<header id="header">
 				<div class="inner">
 					<a href="#" class="image avatar"><img src="static/images/profile.jpg" alt="" /></a>
-					<h1><strong>Antonio Dineros</strong> <br/>I am a web developer<br/></h1>
+					<h1><strong>Antonio Dineros</strong> <br/>a web developer, student, sleepy<br/></h1>
 						I love coffee, movies, and music<br/>
 				</div>
 			</header>
 
 		<!-- Main -->
 			<div id="main">
+				<!-- display success message for forms -->
+				<div id="notification" style="display: none; color: gray; font-weight: bold;">
+					    {% if message_sent %}
+							<h3>Your message has been sent successfully!</h3>
+						{% endif %}
+				</div>
 
 				<!-- One -->
 					<section id="one">
@@ -71,16 +76,19 @@
 						<h2>Contact Me!</h2>
 						<div class="row">
 							<div class="col-8 col-12-small">
-								<form method="post" action="#">
+								<form method="POST" action="#">
 									<div class="row gtr-uniform gtr-50">
 										<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Name" /></div>
 										<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Email" /></div>
 										<div class="col-12"><textarea name="message" id="message" placeholder="Message" rows="4"></textarea></div>
 									</div>
+									<div style="padding-top: 10px;">
+										<ul class="actions">
+										<li><input type="submit" value="Send Message" /></li>
+										</ul>
+									</div>
 								</form>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
+
 							</div>
 							<div class="col-4 col-12-small">
 								<ul class="labeled-icons">
@@ -99,6 +107,7 @@
 								</ul>
 							</div>
 						</div>
+
 					</section>
 			</div>
 
@@ -121,6 +130,25 @@
 			<script src="static/js/breakpoints.min.js"></script>
 			<script src="static/js/util.js"></script>
 			<script src="static/js/main.js"></script>
+			<script type="text/javascript">
+				window.onload = function() {
+					{% if message_sent %}
+						var notification = document.getElementById("notification");
 
+						// show the notification
+						notification.style.display = "block";
+
+						// after a few seconds, start fading out
+						setTimeout(function() {
+							notification.style.opacity = 0;  // Start fading out
+						}, 1000);  // 100ms delay before starting fade-out effect
+
+						// hide the notification entirely
+						setTimeout(function() {
+							notification.style.display = "none";
+						}, 4000);
+					{% endif %}
+				};
+			</script>
 	</body>
 </html>
