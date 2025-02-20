@@ -10,6 +10,8 @@ app.secret_key = os.getenv("SECRET_KEY")
 # initialize credentials for email
 email = os.getenv("EMAIL")
 password = os.getenv("EMAIL_PW")
+smtp_server = "smtp.gmail.com"
+smtp_port = 587
 
 
 # home route
@@ -29,32 +31,32 @@ def home():
 
 
 def send_email(name, useremail, message):
-    connection = smtplib.SMTP("smtp.gmail.com")
-    connection.starttls()  # secure connection
+    with smtplib.SMTP(smtp_server, smtp_port, timeout=60) as server:
+        server.starttls()  # secure connection
 
-    connection.login(user=email, password=password)
-    subject = "New Contact Form Submission"
-    body = f"""
-    You have received a new message from your portfolio contact form.
+        server.login(user=email, password=password)
+        subject = "New Contact Form Submission"
+        body = f"""
+        You have received a new message from your portfolio contact form.
+    
+        📌 Name: {name}
+        📧 Email: {useremail}
+    
+        📝 Message:
+        {message}
+    
+        ---
+        Best,  
+        Your Portfolio Website
+        """
 
-    📌 Name: {name}
-    📧 Email: {useremail}
+        msg = f"Subject: {subject}\n\n{body}"
 
-    📝 Message:
-    {message}
-
-    ---
-    Best,  
-    Your Portfolio Website
-    """
-
-    msg = f"Subject: {subject}\n\n{body}"
-
-    connection.sendmail(
-        from_addr=email,
-        to_addrs="ajmdineros@gmail.com",
-        msg=msg.encode("utf-8")  # Ensures special characters are supported
-    )
+        server.sendmail(
+            from_addr=email,
+            to_addrs="ajmdineros@gmail.com",
+            msg=msg.encode("utf-8")  # Ensures special characters are supported
+        )
 
 
 if __name__ == "__main__":
